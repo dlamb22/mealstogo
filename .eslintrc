@@ -1,0 +1,21 @@
+{
+	"extends": "@react-native-community",
+	"rules": {
+		"quotes": [
+			"error",
+			"single",
+			{ "avoidEscape": true, "allowTemplateLiterals": true }
+		],
+		"no-tabs": ["error", { "allowIndentationTabs": true }],
+		"jsx-quotes": ["error", "prefer-single"],
+		"prettier/prettier": [
+			"error",
+			{
+				"singleQuote": true,
+				"jsxSingleQuote": true,
+				"semi": true,
+				"useTabs": true
+			}
+		]
+	}
+}
