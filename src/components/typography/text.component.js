@@ -11,14 +11,16 @@ const defaultTextStyles = (theme) => `
 
 const body = (theme) => `font-size: ${theme.fontSizes.body};`;
 
-const label = (theme) =>
-	`font-family: ${theme.fonts.heading};
+const label = (theme) => `
+  font-family: ${theme.fonts.heading};
   font-size: ${theme.fontSizes.body};
-  font-weight: ${theme.fontWeights.medium}`;
+  font-weight: ${theme.fontWeights.medium}
+`;
 
-const caption = (theme) =>
-	`font-size: ${theme.fontSizes.caption};
-  font-weight: ${theme.fontWeights.bold}`;
+const caption = (theme) => `
+  font-size: ${theme.fontSizes.caption};
+  font-weight: ${theme.fontWeights.bold}
+`;
 
 const error = (theme) => `color: ${theme.colors.text.error};`;
 

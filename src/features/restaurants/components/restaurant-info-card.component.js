@@ -2,6 +2,7 @@ import React from 'react';
 
 import { SvgXml } from 'react-native-svg';
 import { Text } from '../../../components/typography/text.component';
+import { Spacer } from '../../../components/spacer/spacer.component';
 
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
@@ -9,15 +10,18 @@ import open from '../../../../assets/open';
 import {
 	RestaurantCard,
 	RestaurantCardCover,
+	Icon,
 	Info,
 	Section,
 	Rating,
 	Address,
+	SectionInfo,
 } from './restaurant-info-card.styles';
 
 export function RestaurantInfoCard({ restaurant = {} }) {
 	const {
 		name = 'Some Restaurant',
+		icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
 		photos = [
 			'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
 		],
@@ -40,10 +44,15 @@ export function RestaurantInfoCard({ restaurant = {} }) {
 							<SvgXml xml={star} width={20} height={20} />
 						))}
 					</Rating>
-					{isClosedTemporarily && (
-						<Text variant='error'>CLOSED TEMPORARILY</Text>
-					)}
-					{isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+					<SectionInfo>
+						{isClosedTemporarily && (
+							<Spacer position='right' size='medium'>
+								<Text variant='error'>CLOSED TEMPORARILY</Text>
+							</Spacer>
+						)}
+						{isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+						<Icon source={{ uri: icon }} />
+					</SectionInfo>
 				</Section>
 				<Address>{address}</Address>
 			</Info>

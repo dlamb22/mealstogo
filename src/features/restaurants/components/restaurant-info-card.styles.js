@@ -16,6 +16,12 @@ export const Address = styled(Text)`
 	font-size: ${(props) => props.theme.fontSizes.caption};
 `;
 
+export const Icon = styled.Image`
+	width: 15px;
+	height: 15px;
+	margin-left: 10px;
+`;
+
 export const Info = styled.View`
 	padding: ${(props) => props.theme.space[3]};
 `;
@@ -29,4 +35,9 @@ export const Section = styled.View`
 export const Rating = styled.View`
 	flex-direction: row;
 	padding: ${(props) => props.theme.space[2]} 0px;
+`;
+
+export const SectionInfo = styled.View`
+	flex-direction: row;
+	justify-content: flex-end;
 `;
