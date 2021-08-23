@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 
 import { RestaurantContext } from '../../../services/restaurants/restaurants.context';
@@ -26,7 +26,7 @@ const Loading = styled(ActivityIndicator)`
 	margin-left: -25px;
 `;
 
-export function RestaurantsScreen() {
+export function RestaurantsScreen({ navigation }) {
 	const { isLoading, restaurants } = useContext(RestaurantContext);
 
 	return (
@@ -40,9 +40,13 @@ export function RestaurantsScreen() {
 			<RestaurantList
 				data={restaurants}
 				renderItem={({ item }) => (
-					<Spacer position='bottom' size='large'>
-						<RestaurantInfoCard restaurant={item} />
-					</Spacer>
+					<TouchableOpacity
+						onPress={() => navigation.navigate('Restaurant Detail')}
+					>
+						<Spacer position='bottom' size='large'>
+							<RestaurantInfoCard restaurant={item} />
+						</Spacer>
+					</TouchableOpacity>
 				)}
 				keyExtractor={(item) => item.name}
 			/>
