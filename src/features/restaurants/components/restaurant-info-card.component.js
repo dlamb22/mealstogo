@@ -1,4 +1,5 @@
 import React from 'react';
+import { Favorite } from '../../../components/favorites/favorite.component';
 
 import { SvgXml } from 'react-native-svg';
 import { Text } from '../../../components/typography/text.component';
@@ -36,6 +37,7 @@ export function RestaurantInfoCard({ restaurant = {} }) {
 
 	return (
 		<RestaurantCard elevation={5}>
+			<Favorite restaurant={restaurant} />
 			<RestaurantCardCover key={name} source={{ uri: photos[0] }} />
 			<Info>
 				<Text variant='label'>{name}</Text>
