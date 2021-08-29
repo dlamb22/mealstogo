@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeArea } from '../../components/utility/safe-area-component';
-import { RestaurantsNavigation } from './restaurants.navigation';
-import { MapScreen } from '../../features/map/screens/map.screen';
-
-import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
-import { Text } from 'react-native-paper';
-import { AuthButton } from '../../features/account/components/account.styles';
 
-import { AuthenticationContext } from '../../services/authentication/authentication.context';
 import { RestaurantsContextProvider } from '../../services/restaurants/restaurants.context';
 import { LocationContextProvider } from '../../services/location/location.context';
 import { FavoritesContextProvider } from '../../services/favorites/favorites.context';
+
+import { MapScreen } from '../../features/map/screens/map.screen';
+import { RestaurantsNavigation } from './restaurants.navigation';
+import { SettingsNavigation } from './settings.navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,29 +16,6 @@ const TAB_ICON = {
 	Restaurants: 'md-restaurant',
 	Map: 'md-map',
 	Settings: 'md-settings',
-};
-
-const SettingsContainer = styled(SafeArea)`
-	flex: 1;
-	align-items: center;
-`;
-
-const LogoutButtonContainer = styled.View`
-	width: 200px;
-`;
-
-const Settings = () => {
-	const { onLogout } = useContext(AuthenticationContext);
-	return (
-		<SettingsContainer>
-			<Text>Settings</Text>
-			<LogoutButtonContainer>
-				<AuthButton mode='contained' onPress={() => onLogout()}>
-					Logout
-				</AuthButton>
-			</LogoutButtonContainer>
-		</SettingsContainer>
-	);
 };
 
 const createScreenOptions = ({ route }) => {
@@ -53,6 +26,7 @@ const createScreenOptions = ({ route }) => {
 		),
 		tabBarActiveTintColor: 'tomato',
 		tabBarInactiveTintColor: 'gray',
+		headerShown: false,
 	};
 };
 
@@ -61,17 +35,9 @@ export const AppNavigation = () => (
 		<LocationContextProvider>
 			<RestaurantsContextProvider>
 				<Tab.Navigator screenOptions={createScreenOptions}>
-					<Tab.Screen
-						options={{ headerShown: false }}
-						name='Restaurants'
-						component={RestaurantsNavigation}
-					/>
-					<Tab.Screen
-						options={{ headerShown: false }}
-						name='Map'
-						component={MapScreen}
-					/>
-					<Tab.Screen name='Settings' component={Settings} />
+					<Tab.Screen name='Restaurants' component={RestaurantsNavigation} />
+					<Tab.Screen name='Map' component={MapScreen} />
+					<Tab.Screen name='Settings' component={SettingsNavigation} />
 				</Tab.Navigator>
 			</RestaurantsContextProvider>
 		</LocationContextProvider>
