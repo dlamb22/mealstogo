@@ -1,12 +1,18 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { Text } from 'react-native';
-
 import { SafeArea } from '../../components/utility/safe-area-component';
 import { RestaurantsNavigation } from './restaurants.navigation';
 import { MapScreen } from '../../features/map/screens/map.screen';
+
+import styled from 'styled-components';
+import { Ionicons } from '@expo/vector-icons';
+import { Text } from 'react-native-paper';
+import { AuthButton } from '../../features/account/components/account.styles';
+
+import { AuthenticationContext } from '../../services/authentication/authentication.context';
+import { RestaurantsContextProvider } from '../../services/restaurants/restaurants.context';
+import { LocationContextProvider } from '../../services/location/location.context';
+import { FavoritesContextProvider } from '../../services/favorites/favorites.context';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,11 +22,28 @@ const TAB_ICON = {
 	Settings: 'md-settings',
 };
 
-const Settings = () => (
-	<SafeArea>
-		<Text>Settings</Text>
-	</SafeArea>
-);
+const SettingsContainer = styled(SafeArea)`
+	flex: 1;
+	align-items: center;
+`;
+
+const LogoutButtonContainer = styled.View`
+	width: 200px;
+`;
+
+const Settings = () => {
+	const { onLogout } = useContext(AuthenticationContext);
+	return (
+		<SettingsContainer>
+			<Text>Settings</Text>
+			<LogoutButtonContainer>
+				<AuthButton mode='contained' onPress={() => onLogout()}>
+					Logout
+				</AuthButton>
+			</LogoutButtonContainer>
+		</SettingsContainer>
+	);
+};
 
 const createScreenOptions = ({ route }) => {
 	const iconName = TAB_ICON[route.name];
@@ -34,19 +57,23 @@ const createScreenOptions = ({ route }) => {
 };
 
 export const AppNavigation = () => (
-	<NavigationContainer>
-		<Tab.Navigator screenOptions={createScreenOptions}>
-			<Tab.Screen
-				options={{ headerShown: false }}
-				name='Restaurants'
-				component={RestaurantsNavigation}
-			/>
-			<Tab.Screen
-				options={{ headerShown: false }}
-				name='Map'
-				component={MapScreen}
-			/>
-			<Tab.Screen name='Settings' component={Settings} />
-		</Tab.Navigator>
-	</NavigationContainer>
+	<FavoritesContextProvider>
+		<LocationContextProvider>
+			<RestaurantsContextProvider>
+				<Tab.Navigator screenOptions={createScreenOptions}>
+					<Tab.Screen
+						options={{ headerShown: false }}
+						name='Restaurants'
+						component={RestaurantsNavigation}
+					/>
+					<Tab.Screen
+						options={{ headerShown: false }}
+						name='Map'
+						component={MapScreen}
+					/>
+					<Tab.Screen name='Settings' component={Settings} />
+				</Tab.Navigator>
+			</RestaurantsContextProvider>
+		</LocationContextProvider>
+	</FavoritesContextProvider>
 );

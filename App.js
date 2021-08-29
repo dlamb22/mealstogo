@@ -1,10 +1,23 @@
 import React from 'react';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 import { ThemeProvider } from 'styled-components';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { AuthenticationContextProvider } from './src/services/authentication/authentication.context';
 
-import { RestaurantsContextProvider } from './src/services/restaurants/restaurants.context';
-import { LocationContextProvider } from './src/services/location/location.context';
-import { FavoritesContextProvider } from './src/services/favorites/favorites.context';
+// Initialize Firebase
+const firebaseConfig = {
+	apiKey: 'AIzaSyAr7S701-ZZS50JJpjlBYtaxnXK6fQI62g',
+	authDomain: 'meals-to-go-32dea.firebaseapp.com',
+	projectId: 'meals-to-go-32dea',
+	storageBucket: 'meals-to-go-32dea.appspot.com',
+	messagingSenderId: '648552207844',
+	appId: '1:648552207844:web:ae58f2270b0e61baa723f1',
+};
+
+if (!firebase.apps.length) {
+	firebase.initializeApp(firebaseConfig);
+}
 
 import { Navigation } from './src/infrastructure/navigation';
 import { theme } from './src/infrastructure/theme';
@@ -28,13 +41,9 @@ export default function App() {
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<FavoritesContextProvider>
-					<LocationContextProvider>
-						<RestaurantsContextProvider>
-							<Navigation />
-						</RestaurantsContextProvider>
-					</LocationContextProvider>
-				</FavoritesContextProvider>
+				<AuthenticationContextProvider>
+					<Navigation />
+				</AuthenticationContextProvider>
 			</ThemeProvider>
 			<ExpoStatusBar style='auto' />
 		</>
